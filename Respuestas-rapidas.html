@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respuestas Rápidas · Fibra Óptica Bogotá</title>
+<style>
+  :root{
+    --bg: #0b1520;
+    --bg-card: #101f2e;
+    --bg-card-hover: #142838;
+    --line: #1e3446;
+    --fiber: #33e0c8;
+    --fiber-dim: #1f8f7f;
+    --text: #eaf3f2;
+    --text-dim: #8fa8ab;
+    --amber: #ffb84d;
+    --danger: #ff6b6b;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(1200px 600px at 50% -10%, #0f2233 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+  header{
+    max-width: 640px;
+    margin: 0 auto 22px;
+    text-align: left;
+  }
+  .brand-line{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 6px;
+  }
+  .fiber-dot{
+    width:10px;height:10px;border-radius:50%;
+    background: var(--fiber);
+    box-shadow: 0 0 10px 2px rgba(51,224,200,0.7);
+    flex-shrink:0;
+  }
+  h1{
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  header p{
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    margin: 4px 0 0 20px;
+  }
+  main{
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .card{
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 14px 12px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .card:focus-within{
+    border-color: var(--fiber-dim);
+  }
+  .card-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .label{
+    font-size: 0.78rem;
+    color: var(--fiber);
+    font-weight: 600;
+  }
+  textarea{
+    width:100%;
+    resize: vertical;
+    min-height: 54px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.94rem;
+    line-height: 1.4;
+    padding: 0;
+    outline: none;
+  }
+  .card-foot{
+    display:flex;
+    justify-content:flex-end;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .card-foot .spacer{ flex:1; }
+  button.copy-btn, button.edit-btn, button.delete-btn{
+    appearance:none;
+    border: 1px solid var(--fiber-dim);
+    background: transparent;
+    color: var(--fiber);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.edit-btn{
+    border-color: var(--line);
+    color: var(--text-dim);
+  }
+  button.edit-btn:hover{
+    background: rgba(255,255,255,0.05);
+  }
+  button.edit-btn.active{
+    border-color: var(--amber);
+    color: var(--amber);
+    background: rgba(255,184,77,0.08);
+  }
+  button.delete-btn{
+    border-color: var(--line);
+    color: var(--danger);
+    padding: 7px 10px;
+  }
+  button.delete-btn:hover{
+    background: rgba(255,107,107,0.08);
+  }
+  button.copy-btn:hover{
+    background: rgba(51,224,200,0.08);
+  }
+  button.copy-btn:active, button.edit-btn:active, button.delete-btn:active{
+    transform: scale(0.97);
+  }
+  button.copy-btn.copied{
+    background: var(--fiber);
+    border-color: var(--fiber);
+    color: #06211c;
+  }
+  textarea[readonly]{
+    cursor: default;
+  }
+  textarea:not([readonly]){
+    background: rgba(255,184,77,0.05);
+    border-radius: 6px;
+    padding: 4px 6px;
+    margin: -4px -6px;
+  }
+  .label-input{
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--fiber);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    width: 100%;
+  }
+  .label-input[readonly]{
+    cursor: default;
+  }
+  .label-input:not([readonly]){
+    background: rgba(51,224,200,0.08);
+    border-radius: 4px;
+    padding: 2px 4px;
+  }
+  .tabs{
+    display:flex;
+    gap: 6px;
+    margin: 4px auto 18px;
+    max-width: 640px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tab-btn{
+    appearance:none;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .tab-btn:hover{
+    color: var(--text);
+  }
+  .tab-btn.active{
+    color: var(--fiber);
+    border-bottom-color: var(--fiber);
+  }
+  .add-btn{
+    appearance:none;
+    width: 100%;
+    border: 1px dashed var(--fiber-dim);
+    background: transparent;
+    color: var(--fiber);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 13px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .add-btn:hover{
+    background: rgba(51,224,200,0.06);
+  }
+  .add-btn:active{
+    transform: scale(0.99);
+  }
+  footer{
+    max-width: 640px;
+    margin: 26px auto 0;
+    text-align:center;
+    color: var(--text-dim);
+    font-size: 0.76rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-line">
+    <span class="fiber-dot"></span>
+    <h1>Respuestas rápidas</h1>
+  </div>
+  <p>Toca en cualquier texto para editarlo, luego pulsa Copiar.</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" data-gender="hombre">Cliente hombre</button>
+  <button class="tab-btn" data-gender="mujer">Cliente mujer</button>
+</div>
+
+<main id="cards"></main>
+<button class="add-btn" id="addBtn">+ Agregar respuesta</button>
+
+<footer>Los cambios se guardan automáticamente en este dispositivo.</footer>
+
+<script>
+const DEFAULTS = [
+  { id: "saludo1", label: "Saludo 1",
+    text: "¡Hola! 👋 Gracias por escribirnos a FIBRA ÓPTICA BOGOTA HOGARES. Cuéntame, ¿en qué barrio o dirección necesitas el servicio de internet?" },
+  { id: "saludo2", label: "Saludo 2",
+    text: "¡Hola de nuevo! Sigo pendiente de tu solicitud de internet. ¿Me confirmas la dirección para verificar la cobertura?" },
+  { id: "si_cobertura", label: "Sí cobertura",
+    text: "¡Excelente noticia! 🎉 Sí tenemos cobertura de fibra óptica en tu sector. Te cuento los planes disponibles:" },
+  { id: "planes", label: "Planes",
+    text: "Estos son nuestros planes disponibles:\n📶 50 Megas\n📶 100 Megas\n📶 200 Megas\nIncluyen instalación y router WiFi. ¿Cuál te interesa?" },
+  { id: "no_cobertura", label: "No cobertura",
+    text: "Lamentablemente en este momento no tenemos cobertura en tu sector 😕. Guardo tus datos y te aviso apenas se habilite la zona." },
+  { id: "venezolano", label: "Venezolano",
+    text: "Para el proceso necesitamos tu Cédula o PPT (Permiso por Protección Temporal) vigente. ¿Tienes el documento a la mano para continuar?" },
+  { id: "clausula", label: "Cláusula",
+    text: "El plan tiene una permanencia mínima de 6 meses. Si cancelas antes de ese tiempo, aplica una cláusula de penalidad equivalente a los meses restantes. ¿Deseas continuar?" },
+  { id: "solicitar_datos", label: "Solicitar datos",
+    text: "Para continuar con el proceso necesito estos datos:\n📝 Nombre completo\n🆔 Cédula\n📍 Dirección exacta\n📞 Número de contacto\n📧 Correo electrónico" },
+  { id: "varios_operadores", label: "Varios operadores",
+    text: "Veo que en tu edificio o conjunto hay convenio con otro operador. Vamos a verificar si es posible instalar de todas formas, o si se necesita autorización de la administración." },
+];
+
+const container = document.getElementById("cards");
+const addBtn = document.getElementById("addBtn");
+const tabBtns = document.querySelectorAll(".tab-btn");
+let currentGender = "hombre";
+
+function keysFor(gender) {
+  return {
+    values: `respuestas-rapidas-${gender}`,
+    custom: `respuestas-rapidas-custom-${gender}`,
+  };
+}
+
+async function loadValues() {
+  try {
+    const raw = localStorage.getItem(keysFor(currentGender).values);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+async function saveValues(values) {
+  try {
+    localStorage.setItem(keysFor(currentGender).values, JSON.stringify(values));
+  } catch (e) {
+    console.error("No se pudo guardar:", e);
+  }
+}
+
+async function loadCustom() {
+  try {
+    const raw = localStorage.getItem(keysFor(currentGender).custom);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+async function saveCustom(list) {
+  try {
+    localStorage.setItem(keysFor(currentGender).custom, JSON.stringify(list));
+  } catch (e) {
+    console.error("No se pudo guardar:", e);
+  }
+}
+
+function buildCard(item, opts) {
+  const { value, label, isCustom, onLabelChange, onTextChange, onDelete } = opts;
+
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const head = document.createElement("div");
+  head.className = "card-head";
+
+  let labelEl;
+  if (isCustom) {
+    labelEl = document.createElement("input");
+    labelEl.type = "text";
+    labelEl.className = "label-input";
+    labelEl.value = label;
+    labelEl.readOnly = true;
+  } else {
+    labelEl = document.createElement("span");
+    labelEl.className = "label";
+    labelEl.textContent = label;
+  }
+  head.appendChild(labelEl);
+
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.readOnly = true;
+  textarea.rows = Math.min(8, Math.max(2, value.split("\n").length + (value.length > 60 ? 1 : 0)));
+
+  const foot = document.createElement("div");
+  foot.className = "card-foot";
+
+  const editBtn = document.createElement("button");
+  editBtn.className = "edit-btn";
+  editBtn.textContent = "Editar";
+  editBtn.addEventListener("click", () => {
+    const nowEditing = textarea.readOnly;
+    textarea.readOnly = !nowEditing;
+    if (isCustom) labelEl.readOnly = !nowEditing;
+    editBtn.classList.toggle("active", nowEditing);
+    editBtn.textContent = nowEditing ? "Listo" : "Editar";
+    if (nowEditing) {
+      textarea.focus();
+    } else {
+      if (isCustom) onLabelChange(labelEl.value);
+      onTextChange(textarea.value);
+    }
+  });
+
+  const copyBtn = document.createElement("button");
+  copyBtn.className = "copy-btn";
+  copyBtn.textContent = "Copiar";
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(textarea.value);
+    } catch (e) {
+      textarea.select();
+      document.execCommand("copy");
+    }
+    copyBtn.textContent = "¡Copiado!";
+    copyBtn.classList.add("copied");
+    setTimeout(() => {
+      copyBtn.textContent = "Copiar";
+      copyBtn.classList.remove("copied");
+    }, 1200);
+  });
+
+  foot.appendChild(editBtn);
+  if (isCustom && onDelete) {
+    const delBtn = document.createElement("button");
+    delBtn.className = "delete-btn";
+    delBtn.textContent = "Borrar";
+    delBtn.addEventListener("click", onDelete);
+    foot.appendChild(delBtn);
+  }
+  const spacer = document.createElement("div");
+  spacer.className = "spacer";
+  foot.appendChild(spacer);
+  foot.appendChild(copyBtn);
+
+  card.appendChild(head);
+  card.appendChild(textarea);
+  card.appendChild(foot);
+  return card;
+}
+
+async function renderAll() {
+  const [values, custom] = await Promise.all([loadValues(), loadCustom()]);
+  container.innerHTML = "";
+
+  DEFAULTS.forEach(item => {
+    const value = values[item.id] !== undefined ? values[item.id] : item.text;
+    const card = buildCard(item, {
+      value,
+      label: item.label,
+      isCustom: false,
+      onTextChange: async (newText) => {
+        const current = await loadValues();
+        current[item.id] = newText;
+        saveValues(current);
+      },
+    });
+    container.appendChild(card);
+  });
+
+  custom.forEach(item => {
+    const card = buildCard(item, {
+      value: item.text,
+      label: item.label,
+      isCustom: true,
+      onLabelChange: async (newLabel) => {
+        const list = await loadCustom();
+        const found = list.find(i => i.id === item.id);
+        if (found) found.label = newLabel;
+        saveCustom(list);
+      },
+      onTextChange: async (newText) => {
+        const list = await loadCustom();
+        const found = list.find(i => i.id === item.id);
+        if (found) found.text = newText;
+        saveCustom(list);
+      },
+      onDelete: async () => {
+        const list = await loadCustom();
+        const filtered = list.filter(i => i.id !== item.id);
+        await saveCustom(filtered);
+        renderAll();
+      },
+    });
+    container.appendChild(card);
+  });
+}
+
+addBtn.addEventListener("click", async () => {
+  const list = await loadCustom();
+  const newItem = {
+    id: "custom_" + Date.now(),
+    label: "Nueva respuesta",
+    text: "",
+  };
+  list.push(newItem);
+  await saveCustom(list);
+  await renderAll();
+
+  const cards = container.querySelectorAll(".card");
+  const lastCard = cards[cards.length - 1];
+  if (lastCard) {
+    lastCard.scrollIntoView({ behavior: "smooth", block: "center" });
+    const editBtn = lastCard.querySelector(".edit-btn");
+    if (editBtn) editBtn.click();
+  }
+});
+
+tabBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.dataset.gender === currentGender) return;
+    tabBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentGender = btn.dataset.gender;
+    renderAll();
+  });
+});
+
+renderAll();
+</script>
+
+</body>
+</html>
